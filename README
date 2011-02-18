@@ -1,0 +1,30 @@
+DepenencyContext is an attempt to bring lightweight simple Dependency Injection to Objective C.
+
+It currently only needs a dependencies file (plist), and the library including the SynthesizeSingleton.h class.
+
+The DependencyContext class is a singleton that keeps a list of used Services, but only loads the implementation at first request.
+
+At present only one instance per service will be instantiated. 
+Support for other situations could be added later if it proves to be 
+a requirement.
+
+Usage: 
+
+Like standard DI you will need to define a protocol (interface for the java minded) and one or more implementations.
+
+Next you will need to define a dependencies file named dependencies.plist in your resources use the key column for your Service and the value as a String the implementation you wish to inject.
+
+Include DependencyContext.h in any files that you wish to use access the dependencies for.
+
+From here on in you can access any service using the [[DependencyContext sharedInstance] getDependency: __SERVICESTRING__] call.
+
+Autowiring - can be improved: 
+
+Do as above; then create a property in the header file you plan to use. 
+IE: id<Service> servicePropertyName; 
+Next define the property further as @property(getter=[get[Service], readonly) id<Service> servicePropertyName;
+
+lastly in your implementation call the macro AUTO_WIRE([Service], @"[Service]") where service is the name of the service.
+
+now you can use the injected service as a standard (readonly) property
+
